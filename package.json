@@ -1,0 +1,55 @@
+{
+  "name": "rag-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc && cp src/db/schema.sql dist/db/schema.sql",
+    "start": "node dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.9.0",
+      "onFail": "download"
+    }
+  },
+  "dependencies": {
+    "bullmq": "^5.81.2",
+    "cheerio": "^1.2.0",
+    "compression": "^1.8.1",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.2.0",
+    "ioredis": "^5.11.1",
+    "mammoth": "^1.12.0",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "openai": "^6.49.0",
+    "pdf-parse": "^2.4.5",
+    "pg": "^8.22.0",
+    "pgvector": "^0.3.0",
+    "turndown": "^7.2.4"
+  },
+  "devDependencies": {
+    "@types/compression": "^1.8.1",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/morgan": "^1.9.10",
+    "@types/multer": "^2.2.0",
+    "@types/node": "^26.0.1",
+    "@types/pg": "^8.20.0",
+    "@types/turndown": "^5.0.6",
+    "eslint": "^10.5.0",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.4",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "type": "module"
+}
