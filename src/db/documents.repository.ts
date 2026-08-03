@@ -60,3 +60,7 @@ export async function getDocumentsByIds(ids: string[]): Promise<DocumentRecord[]
   ]);
   return result.rows;
 }
+
+export async function deleteDocument(id: string): Promise<void> {
+  await pool.query(`DELETE FROM documents WHERE id = $1`, [id]);
+}

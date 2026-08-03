@@ -5,6 +5,7 @@ import {
   getDocumentById,
   listDocuments,
   updateDocumentStatus,
+  deleteDocument,
 } from "../db/documents.repository.js";
 import { enqueueDocumentJob } from "../queue/document.queue.js";
 import { uploadDocuments } from "../upload/multer.config.js";
@@ -107,3 +108,15 @@ documentsRouter.get("/:id", async (req: Request, res: Response) => {
     createdAt: document.created_at,
   });
 });
+
+documentsRouter.delete("/:id", async (req: Request, res: Response) => {
+  const id = req.params.id as string;
+  try {
+    await deleteDocument(id);
+    res.json({ success: true, id });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Failed to delete document" });
+  }
+});
+

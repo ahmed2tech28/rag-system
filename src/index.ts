@@ -6,7 +6,7 @@ import "dotenv/config";
 import express, { type NextFunction, type Request, type Response } from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-
+import path from "node:path";
 import { env } from "./config/env.js";
 import { initDatabase } from "./db/init.js";
 import { startDocumentWorker } from "./queue/document.worker.js";
@@ -24,6 +24,8 @@ async function main() {
   app.use(compression());
   app.use(morgan("dev"));
   app.use(express.json());
+  app.use(express.static(path.join(process.cwd(), "public")));
+
 
   app.get("/", (_req, res) => {
     res.json({ status: "ok" });

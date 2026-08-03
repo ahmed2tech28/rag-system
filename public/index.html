@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAG Chat & Upload</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+:root {
+  --bg: hsl(210, 70%, 15%);
+  --primary: hsl(210, 80%, 55%);
+  --accent: hsl(210, 90%, 70%);
+  --text: hsl(0, 0%, 95%);
+  --radius: 12px;
+}
+* { box-sizing: border-box; margin:0; padding:0; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
+.container { display:flex; flex-direction:column; gap:2rem; max-width:960px; margin:2rem auto; padding:1rem; }
+section { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border-radius: var(--radius); padding:1.5rem; box-shadow:0 4px 30px rgba(0,0,0,0.5); }
+h2 { margin-bottom:0.75rem; color: var(--primary); font-weight:600; }
+button { background: var(--primary); color:#fff; border:none; border-radius: var(--radius); padding:0.5rem 1rem; cursor:pointer; transition:background 0.2s; }
+button:hover { background: hsl(210, 80%, 45%); }
+#chatBox { max-height:300px; overflow-y:auto; margin-bottom:1rem; padding:0.5rem; background:rgba(0,0,0,0.2); border-radius: var(--radius); }
+.message { margin:0.5rem 0; }
+.message.user { text-align:right; color: var(--accent); }
+.message.bot { text-align:left; }
+textarea { width:100%; resize:none; border-radius: var(--radius); border:1px solid rgba(255,255,255,0.2); padding:0.5rem; background:rgba(255,255,255,0.1); color: var(--text); }
+</style>
+</head>
+<body>
+  <main class="container">
+    <section class="upload-section">
+      <h2>Upload Documents</h2>
+      <input type="file" id="fileInput" multiple />
+      <button id="uploadBtn">Upload</button>
+      <ul id="docList"></ul>
+    </section>
+    <section class="chat-section">
+      <h2>Chat</h2>
+      <div id="chatBox" class="chat-box"></div>
+      <textarea id="questionInput" placeholder="Ask a question..." rows="3"></textarea>
+      <button id="sendBtn">Send</button>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
