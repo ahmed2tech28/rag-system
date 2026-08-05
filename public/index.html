@@ -9,32 +9,170 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
 :root {
-  --bg: hsl(210, 70%, 15%);
-  --primary: hsl(210, 80%, 55%);
-  --accent: hsl(210, 90%, 70%);
-  --text: hsl(0, 0%, 95%);
-  --radius: 12px;
+  --bg: hsl(222, 47%, 8%);
+  --bg-glow: hsl(210, 90%, 45%);
+  --surface: hsla(220, 40%, 20%, 0.45);
+  --surface-solid: hsl(220, 35%, 14%);
+  --border: hsla(210, 60%, 80%, 0.12);
+  --primary: hsl(210, 90%, 60%);
+  --primary-hover: hsl(210, 90%, 52%);
+  --accent: hsl(200, 95%, 70%);
+  --text: hsl(210, 30%, 96%);
+  --text-dim: hsl(210, 15%, 65%);
+  --radius: 14px;
+  --radius-sm: 8px;
 }
-* { box-sizing: border-box; margin:0; padding:0; }
-body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); }
-.container { display:flex; flex-direction:column; gap:2rem; max-width:960px; margin:2rem auto; padding:1rem; }
-section { background: rgba(255,255,255,0.08); backdrop-filter: blur(10px); border-radius: var(--radius); padding:1.5rem; box-shadow:0 4px 30px rgba(0,0,0,0.5); }
-h2 { margin-bottom:0.75rem; color: var(--primary); font-weight:600; }
-button { background: var(--primary); color:#fff; border:none; border-radius: var(--radius); padding:0.5rem 1rem; cursor:pointer; transition:background 0.2s; }
-button:hover { background: hsl(210, 80%, 45%); }
-#chatBox { max-height:300px; overflow-y:auto; margin-bottom:1rem; padding:0.5rem; background:rgba(0,0,0,0.2); border-radius: var(--radius); }
-.message { margin:0.5rem 0; }
-.message.user { text-align:right; color: var(--accent); }
-.message.bot { text-align:left; }
-textarea { width:100%; resize:none; border-radius: var(--radius); border:1px solid rgba(255,255,255,0.2); padding:0.5rem; background:rgba(255,255,255,0.1); color: var(--text); }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background:
+    radial-gradient(circle at 15% 0%, hsla(210, 90%, 45%, 0.18), transparent 45%),
+    radial-gradient(circle at 85% 100%, hsla(280, 70%, 50%, 0.12), transparent 45%),
+    var(--bg);
+  background-attachment: fixed;
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container { display: flex; flex-direction: column; gap: 1.5rem; max-width: 720px; margin: 0 auto; padding: 3rem 1.5rem; }
+
+.app-header { text-align: center; margin-bottom: 0.5rem; }
+.app-header h1 { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.02em; }
+.app-header p { color: var(--text-dim); font-size: 0.9rem; margin-top: 0.35rem; }
+
+section {
+  background: var(--surface);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+
+h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+h2::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+.upload-row { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+
+input[type="file"] {
+  flex: 1;
+  min-width: 180px;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  padding: 0.5rem;
+  background: hsla(0, 0%, 100%, 0.04);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-sm);
+}
+input[type="file"]::file-selector-button {
+  background: hsla(0, 0%, 100%, 0.08);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.4rem 0.8rem;
+  margin-right: 0.6rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+input[type="file"]::file-selector-button:hover { background: hsla(0, 0%, 100%, 0.16); }
+
+button {
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 1.2rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+button:hover { background: var(--primary-hover); }
+button:active { transform: scale(0.97); }
+
+#docList { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+#docList:not(:empty) { padding-top: 0.75rem; border-top: 1px solid var(--border); }
+#docList li {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  background: hsla(0, 0%, 100%, 0.04);
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+}
+
+#chatBox {
+  max-height: 320px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background: hsla(0, 0%, 0%, 0.2);
+  border-radius: var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+#chatBox:empty::after {
+  content: 'Ask a question to get started.';
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin: auto;
+}
+#chatBox::-webkit-scrollbar { width: 6px; }
+#chatBox::-webkit-scrollbar-thumb { background: hsla(0, 0%, 100%, 0.15); border-radius: 3px; }
+
+.message {
+  max-width: 80%;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+.message.user { align-self: flex-end; text-align: right; background: hsla(210, 90%, 60%, 0.18); color: var(--accent); }
+.message.bot { align-self: flex-start; text-align: left; background: hsla(0, 0%, 100%, 0.06); }
+
+textarea {
+  width: 100%;
+  resize: none;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.8rem;
+  background: hsla(0, 0%, 100%, 0.05);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+  transition: border-color 0.2s;
+}
+textarea:focus { outline: none; border-color: var(--primary); }
+textarea::placeholder { color: var(--text-dim); }
+
+.chat-section button { width: 100%; }
 </style>
 </head>
 <body>
   <main class="container">
+    <header class="app-header">
+      <h1>RAG Chat</h1>
+      <p>Upload documents, then ask questions grounded in their content.</p>
+    </header>
     <section class="upload-section">
       <h2>Upload Documents</h2>
-      <input type="file" id="fileInput" multiple />
-      <button id="uploadBtn">Upload</button>
+      <div class="upload-row">
+        <input type="file" id="fileInput" multiple />
+        <button id="uploadBtn">Upload</button>
+      </div>
       <ul id="docList"></ul>
     </section>
     <section class="chat-section">
